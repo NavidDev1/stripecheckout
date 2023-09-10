@@ -14,7 +14,29 @@ function Home() {
     });
   }, []);
 
+  function addToCart(product) {
+    // first we check if the product is already inside the cart
+    const isProductInCart = cart.some((item) => item.id === product.id);
+
+    if (isProductInCart) {
+      // if its true that the product is already in the cart we update the quantity
+      const updatedCart = cart.map((item) =>
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setCart(updatedCart);
+    } else {
+      // If the product is not in the cart, we add it with the quantity of 1
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+  }
+
   async function handlePayment() {
+    //Creating an array on line_items based on the items in the cart
+    const lineItems = cart.map((item) => ({
+      price: item.id,
+      quantity: item.quantity,
+    }));
+
     const response = await fetch(
       "http://localhost:3000/checkout/create-checkout-session",
       {
@@ -22,7 +44,7 @@ function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart),
+        body: JSON.stringify({ line_items: lineItems }), //sending the line_items in the request body
       }
     );
 
@@ -33,7 +55,7 @@ function Home() {
     const { url } = await response.json();
     window.location = url;
   }
-
+  console.log(cart);
   return (
     <div>
       <Navbar />
@@ -48,6 +70,7 @@ function Home() {
           ))}
           {product.description}
           <p>Pris: {product.price / 100} kr</p>
+          <button onClick={() => addToCart(product)}>Add to Cart</button>
         </div>
       ))}
       <button
