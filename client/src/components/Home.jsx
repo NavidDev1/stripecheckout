@@ -1,5 +1,5 @@
-import Navbar from "../Navbar";
-import RegisterLogin from "../RegisterLogin";
+import Navbar from "./Navbar";
+import RegisterLogin from "./RegisterLogin";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -9,9 +9,16 @@ function Home() {
 
   useEffect(() => {
     // Getting the products
-    axios.get("http://localhost:3000/").then((response) => {
-      setProducts(response.data);
-    });
+    async function showProducts() {
+      try {
+        const response = await axios.get("http://localhost:3000/");
+        setProducts(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("error showing products", error);
+      }
+    }
+    showProducts();
   }, []);
 
   function addToCart(product) {
@@ -34,7 +41,7 @@ function Home() {
   async function handlePayment() {
     //Creating an array on line_items based on the items in the cart
     const lineItems = cart.map((item) => ({
-      product: item.id,
+      product: item.product.default_price,
       quantity: item.quantity,
     }));
 
@@ -46,6 +53,7 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ line_items: lineItems }), //sending the line_items in the request body
+        //credentials: "include",
       }
     );
 
@@ -72,7 +80,7 @@ function Home() {
             <img key={index} src={image} alt={product.name} /> // Corrected mapping function
           ))}
           {product.description}
-          <p>Pris: {product.price / 100} kr</p>
+          <p>Pris: {product.price.unit_amount / 100} kr</p>
           <button onClick={() => addToCart(product)}>Add to Cart</button>
         </div>
       ))}

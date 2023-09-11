@@ -12,7 +12,7 @@ router.post("/create-checkout-session", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: req.body.map((item) => {
         return {
-          product: item.id,
+          product: item.product,
           quantity: item.quantity,
         };
       }),
@@ -24,7 +24,7 @@ router.post("/create-checkout-session", async (req, res) => {
     res.status(200).json({ url: session.url });
   } catch (error) {
     console.log(error.message);
-    res.status(400).json("Det gick inte bra...");
+    res.status(400).json({ error: error.message });
   }
 });
 
