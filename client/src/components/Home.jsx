@@ -1,5 +1,4 @@
 import Navbar from "./Navbar";
-import RegisterLogin from "./RegisterLogin";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -69,21 +68,28 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <RegisterLogin />
-      {products.map((product) => (
-        <div
-          key={product.id}
-          className="box-content h-32 w-32 p-4 border-4 box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); "
-        >
-          <h3>{product.name}</h3>
-          {product.images.map((image, index) => (
-            <img key={index} src={image} alt={product.name} /> // Corrected mapping function
-          ))}
-          {product.description}
-          <p>Pris: {product.price.unit_amount / 100} kr</p>
-          <button onClick={() => addToCart(product)}>Add to Cart</button>
-        </div>
-      ))}
+      <div className="grid grid-cols-2 gap-4 ">
+        {products.map((product) => (
+          <div
+            key={product.id}
+            className="box-content h-64 w-64 p-4 border-4 box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);  "
+          >
+            <h3>{product.name}</h3>
+            {product.images.map((image, index) => (
+              <img key={index} src={image} alt={product.name} /> // Corrected mapping function
+            ))}
+            {product.description}
+            <p>Pris: {product.price.unit_amount / 100} kr</p>
+            <button
+              onClick={() => addToCart(product)}
+              className=" bg-blue-500
+              hover:bg-blue-700 text-white font-bold py-2px-4  rounded"
+            >
+              Add to Cart
+            </button>
+          </div>
+        ))}
+      </div>
       <button
         onClick={handlePayment}
         className="bg-green-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
