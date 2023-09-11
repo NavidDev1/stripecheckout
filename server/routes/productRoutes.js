@@ -6,6 +6,7 @@ router.get("/", async (req, res) => {
   try {
     const products = await stripe.products.list();
     res.status(200).json(products.data);
+    console.log(products.data);
   } catch (error) {
     console.error(error.message);
     res.status(500).json("Serverfel");

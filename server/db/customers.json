@@ -1,0 +1,9 @@
+[
+  { "username": "user1", "password": "hashed_password1" },
+  { "username": "user2", "password": "hashed_password2" },
+  { "username": "user3", "password": "hashed_password3" },
+  {
+    "username": "ssdsd",
+    "password": "$2b$10$rwCJPn2ETMaSQd3B6wJTmu.DM3TsmpNTDpG7CTNMOKRCujC6gpy0C"
+  }
+]

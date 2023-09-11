@@ -1,5 +1,5 @@
-import "./home.css";
 import Navbar from "../Navbar";
+import RegisterLogin from "../RegisterLogin";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -15,6 +15,7 @@ function Home() {
   }, []);
 
   function addToCart(product) {
+    console.log(product);
     // first we check if the product is already inside the cart
     const isProductInCart = cart.some((item) => item.id === product.id);
 
@@ -33,7 +34,7 @@ function Home() {
   async function handlePayment() {
     //Creating an array on line_items based on the items in the cart
     const lineItems = cart.map((item) => ({
-      price: item.id,
+      product: item.id,
       quantity: item.quantity,
     }));
 
@@ -56,9 +57,11 @@ function Home() {
     window.location = url;
   }
   console.log(cart);
+
   return (
     <div>
       <Navbar />
+      <RegisterLogin />
       {products.map((product) => (
         <div
           key={product.id}

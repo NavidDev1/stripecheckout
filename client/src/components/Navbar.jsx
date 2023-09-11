@@ -8,7 +8,7 @@ function Navbar() {
         <div>
           <ul className="flex space-x-4">
             <li>
-              <a href="/contact" className="text-white hover:text-blue-300">
+              <a href="/" className="text-white hover:text-blue-300">
                 Login
               </a>
             </li>

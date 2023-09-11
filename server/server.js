@@ -6,6 +6,7 @@ const app = express();
 // taking in the routes
 const checkoutRoutes = require("./routes/checkoutRoutes");
 const productRoutes = require("./routes/productRoutes");
+const customerRoutes = require("./routes/customerRoutes");
 
 app.use(express.json());
 
@@ -19,6 +20,7 @@ app.use(
 );
 
 // here we are are using are routes
+app.use("/customers", customerRoutes);
 app.use("/checkout", checkoutRoutes);
 app.use("/", productRoutes);
 
