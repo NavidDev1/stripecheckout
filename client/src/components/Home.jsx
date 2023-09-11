@@ -24,26 +24,26 @@ function Home() {
   function addToCart(product) {
     console.log(product);
     // first we check if the product is already inside the cart
-    const isProductInCart = cart.some((item) => item.id === product.id);
+    const isProductInCart = cart.some(
+      (item) => item.product === product.default_price
+    );
 
     if (isProductInCart) {
       // if its true that the product is already in the cart we update the quantity
       const updatedCart = cart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        item.product === product.default_price
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
       );
       setCart(updatedCart);
     } else {
       // If the product is not in the cart, we add it with the quantity of 1
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([...cart, { product: product.default_price, quantity: 1 }]);
     }
   }
 
   async function handlePayment() {
     //Creating an array on line_items based on the items in the cart
-    const lineItems = cart.map((item) => ({
-      product: item.product.default_price,
-      quantity: item.quantity,
-    }));
 
     const response = await fetch(
       "http://localhost:3000/checkout/create-checkout-session",
@@ -52,7 +52,7 @@ function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ line_items: lineItems }), //sending the line_items in the request body
+        body: JSON.stringify(cart), //sending the line_items in the request body
         //credentials: "include",
       }
     );
