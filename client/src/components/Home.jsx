@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import RegisterLogin from "./RegisterLogin";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -68,6 +69,7 @@ function Home() {
   return (
     <div>
       <Navbar />
+      <RegisterLogin />
       <div className="grid grid-cols-2 gap-4 ">
         {products.map((product) => (
           <div
