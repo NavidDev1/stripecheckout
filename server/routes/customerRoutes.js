@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -7,6 +8,7 @@ const path = require("path");
 
 // construct the path to the customerdb
 const usersFilePath = path.join(__dirname, "..", "db", "customers.json");
+const ordersFilePath = path.join(__dirname, "..", "db", "orders.json");
 
 // Load user data from JSON file (your basic database)
 const usersDB = JSON.parse(fs.readFileSync(usersFilePath));

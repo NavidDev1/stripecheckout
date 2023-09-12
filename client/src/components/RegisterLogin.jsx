@@ -1,107 +1,144 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const RegisterLogin = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+function RegisterLogin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLogin, setShowIslogin] = useState(true);
 
-  const [token, setToken] = useState("");
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleRegister = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/customers/register",
-        formData
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error(error.response.data);
+  useEffect(() => {
+    async function checkAuthStatus() {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/customers/status",
+          { withCredentials: true }
+        );
+        console.log("response status", response.status);
+        if (response.status === 200) {
+          setIsLoggedIn(true);
+          const serverMessage = response.data.message;
+          setMessage(serverMessage);
+          console.log(serverMessage);
+        }
+      } catch (error) {
+        setIsLoggedIn(false);
+        alert("log in to Proceed");
+      }
     }
-  };
+    checkAuthStatus();
+  }, []);
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/login",
-        formData
+        "http://localhost:3000/api/customers/login",
+        { username, password },
+        { withCredentials: true }
       );
-      console.log(response.data);
-      setToken(response.data.token);
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+        setMessage(response.data.message);
+        setShowRegistration(false);
+      }
     } catch (error) {
-      console.error(error.response.data);
-    }
-  };
+      setIsLoggedIn(false);
+      setShowRegistration(true);
 
-  const handleProtected = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/protected", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error.response.data);
+      if (error.response && error.response.status === 401) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("error occured when login in");
+      }
+    }
+
+    const handleRegister = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/customers/register",
+          { username, password },
+          { withCredentials: true }
+        );
+        if (response.status === 201) {
+          setIsLoggedIn(true); //when the user is created we also make him logged in
+          setMessage(response.data.message);
+          setShowRegistration(false); // the registration form is not shown when the user is logged in
+        }
+      } catch (err) {
+        if ((err.response && err, response.data)) {
+          setMessage(err.response.message);
+        } else {
+          setMessage("a error occured");
+        }
+      }
+    };
+    if (isLoggedIn) {
+      return <div>{message}</div>;
     }
   };
 
   return (
-    <div>
-      <h1>Registration and Login</h1>
-      <div>
-        <h2>Register</h2>
+    <div className="flex flex-col items-center space-y-2">
+      <form className="flex items-center">
         <input
           type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
+          placeholder="Email"
+          autoComplete="username"
+          onChange={(e) => setUsername(e.target.value)}
+          className="px-1 py-0.5 text-xs rounded border border-gray-300"
         />
         <input
-          type="password"
-          name="password"
+          type="Password"
           placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
+          autoComplete={showRegistration ? "new-password" : "current-password"}
+          onChange={(e) => setPassword(e.target.value)}
+          className="px-1 py-0.5 text-xs rounded border border-gray-300"
         />
-        <button onClick={handleRegister}>Register</button>
-      </div>
-      <div>
-        <h2>Login</h2>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <button onClick={handleLogin}>Login</button>
-      </div>
-      {token && (
-        <div>
-          <h2>Protected Route</h2>
-          <button onClick={handleProtected}>Access Protected Route</button>
-        </div>
+        {showLogin ? (
+          <button
+            type="button"
+            onClick={handleLogin}
+            className="bg-white text-blue-500 text-xs px-1 py-0.5 rounded hover:bg-gray-200"
+          >
+            Login
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleRegister}
+            className="bg-white text-blue-500 text-xs px-1 py-0.5 rounded hover:bg-gray-200"
+          >
+            Register
+          </button>
+        )}
+      </form>
+      {showLogin ? (
+        <span
+          onClick={() => {
+            setShowlogin(false);
+            setMessage("");
+          }}
+          className="inline-block text-white text-xs px-1 py-0.5 rounded hover:bg-blue-400 cursor-pointer"
+        >
+          Register Please
+        </span>
+      ) : (
+        <span
+          onClick={() => {
+            setShowIslogin(true);
+            setMessage("");
+          }}
+          className="inline-block text-white text-xs px-1 py-0.5 rounded hover:bg-blue-400 cursor-pointer"
+        >
+          Return to Login
+        </span>
       )}
+
+      <p className="text-white text-xs"> {message}</p>
     </div>
   );
-};
+}
 
 export default RegisterLogin;

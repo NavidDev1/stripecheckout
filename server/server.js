@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const cookieParser = require("cookie-parser");
 
 // taking in the routes
 const checkoutRoutes = require("./routes/checkoutRoutes");
@@ -19,6 +20,8 @@ app.use(
     //credentials: true,
   })
 );
+
+app.use(cookieParser());
 
 // here we are are using are routes
 app.use("/customers", customerRoutes);
