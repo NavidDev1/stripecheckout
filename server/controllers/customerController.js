@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const CLIENT_URL = "http://localhost:5174";
 
 // Path to the JSON file that stores user data

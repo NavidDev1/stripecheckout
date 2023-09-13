@@ -53,7 +53,7 @@ function Home() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(cart), //sending the line_items in the request body
-        //credentials: "include",
+        credentials: "include",
       }
     );
 

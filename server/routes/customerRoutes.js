@@ -12,6 +12,7 @@ router.post("/customers/register", register);
 router.post("/customers/login", login);
 router.post("/customers/logout", logout);
 router.get("/customers/status", (req, res) => {
+  console.log("Checking customer status...");
   const token = req.cookies["auth-token"];
   // console.log("Checking auth status. Token:", token);
 

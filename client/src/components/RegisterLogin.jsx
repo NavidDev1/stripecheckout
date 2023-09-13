@@ -53,31 +53,31 @@ function RegisterLogin() {
         setMessage("error occured when login in");
       }
     }
+  };
 
-    const handleRegister = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:3000/api/customers/register",
-          { username, password },
-          { withCredentials: true }
-        );
-        if (response.status === 201) {
-          setIsLoggedIn(true); //when the user is created we also make him logged in
-          setMessage(response.data.message);
-          setShowRegistration(false); // the registration form is not shown when the user is logged in
-        }
-      } catch (err) {
-        if ((err.response && err, response.data)) {
-          setMessage(err.response.message);
-        } else {
-          setMessage("a error occured");
-        }
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/customers/register",
+        { username, password },
+        { withCredentials: true }
+      );
+      if (response.status === 201) {
+        setIsLoggedIn(true); //when the user is created we also make him logged in
+        setMessage(response.data.message);
+        setShowRegistration(false); // the registration form is not shown when the user is logged in
       }
-    };
-    if (isLoggedIn) {
-      return <div>{message}</div>;
+    } catch (err) {
+      if (err.response && err.response.data) {
+        setMessage(err.response.data.message);
+      } else {
+        setMessage("a error occured");
+      }
     }
   };
+  if (isLoggedIn) {
+    return <div>{message}</div>;
+  }
 
   return (
     <div className="flex flex-col items-center space-y-2">
