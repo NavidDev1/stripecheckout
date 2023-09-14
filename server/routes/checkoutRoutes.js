@@ -11,6 +11,7 @@ const router = express.Router();
 const CLIENT_URL = "http://localhost:5173";
 
 router.post("/create-checkout-session", authenticateJWT, async (req, res) => {
+  console.log("Hit /create-checkout-session route");
   try {
     const session = await stripe.checkout.sessions.create({
       line_items: req.body.map((item) => {

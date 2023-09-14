@@ -46,7 +46,7 @@ function Home() {
     //Creating an array on line_items based on the items in the cart
 
     const response = await fetch(
-      "http://localhost:3000/checkout/create-checkout-session",
+      "http://localhost:3000/api/checkout/create-checkout-session",
       {
         method: "POST",
         headers: {

@@ -34,7 +34,7 @@ async function login(req, res) {
   }
 
   // Generating JWT token if user is valid
-  const token = jwt.sign({ username: user.username }, authenticateJWT, {
+  const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
 
@@ -84,9 +84,13 @@ async function register(req, res) {
     fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2));
 
     // Generating JWT token after successful registration
-    const token = jwt.sign({ username: user.username }, "your_secret_key", {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { username: user.username },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     // Storing JWT token as an httpOnly cookie
     res.cookie("auth-token", token, {
