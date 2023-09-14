@@ -2,8 +2,9 @@ const bcrypt = require("bcrypt");
 const path = require("path");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
+const authenticateJWT = require("../middleware/authenticateJWT");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const CLIENT_URL = "http://localhost:5174";
+const CLIENT_URL = "http://localhost:5173";
 
 // Path to the JSON file that stores user data
 const usersFilePath = path.join(__dirname, "../db", "customers.json");
@@ -33,7 +34,7 @@ async function login(req, res) {
   }
 
   // Generating JWT token if user is valid
-  const token = jwt.sign({ username: user.username }, "your_secret_key", {
+  const token = jwt.sign({ username: user.username }, authenticateJWT, {
     expiresIn: "1h",
   });
 
@@ -117,10 +118,19 @@ async function logout(req, res) {
 
 // Authorization function to check if a user is logged in
 async function authorize(req, res) {
-  if (!req.session._id) {
-    return res.status(401).json("You are not logged in");
+  const token = req.cookies["auth-token"];
+
+  if (!token) {
+    return res.status(401).json("You are not authenticated");
   }
-  res.status(200).json(req.session);
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // Return the decoded token or any other response you want
+    res.status(200).json(decoded);
+  } catch (err) {
+    return res.status(401).json("Token verification failed");
+  }
 }
 
 // Exporting functions to be used elsewhere in the app

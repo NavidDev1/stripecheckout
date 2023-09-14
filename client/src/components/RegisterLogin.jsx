@@ -5,9 +5,8 @@ function RegisterLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [showRegistration, setShowRegistration] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showLogin, setShowIslogin] = useState(true);
+  const [showLogin, setShowIsLogin] = useState(true);
 
   useEffect(() => {
     async function checkAuthStatus() {
@@ -24,10 +23,15 @@ function RegisterLogin() {
           console.log(serverMessage);
         }
       } catch (error) {
-        setIsLoggedIn(false);
-        alert("log in to Proceed");
+        if (error.response && error.response.status === 401) {
+          console.log("Unauthorized");
+          setIsLoggedIn(false);
+        } else {
+          console.error("An error occurred:", error);
+        }
       }
     }
+
     checkAuthStatus();
   }, []);
 
@@ -41,16 +45,16 @@ function RegisterLogin() {
       if (response.status === 200) {
         setIsLoggedIn(true);
         setMessage(response.data.message);
-        setShowRegistration(false);
+        setShowIsLogin(true);
       }
     } catch (error) {
       setIsLoggedIn(false);
-      setShowRegistration(true);
+      setShowIsLogin(false); // Switch to registration form
 
       if (error.response && error.response.status === 401) {
         setMessage(error.response.data.message);
       } else {
-        setMessage("error occured when login in");
+        setMessage("error occurred when logging in");
       }
     }
   };
@@ -63,18 +67,19 @@ function RegisterLogin() {
         { withCredentials: true }
       );
       if (response.status === 201) {
-        setIsLoggedIn(true); //when the user is created we also make him logged in
+        setIsLoggedIn(true);
         setMessage(response.data.message);
-        setShowRegistration(false); // the registration form is not shown when the user is logged in
+        setShowIsLogin(true);
       }
     } catch (err) {
       if (err.response && err.response.data) {
         setMessage(err.response.data.message);
       } else {
-        setMessage("a error occured");
+        setMessage("an error occurred");
       }
     }
   };
+
   if (isLoggedIn) {
     return <div>{message}</div>;
   }
@@ -92,7 +97,7 @@ function RegisterLogin() {
         <input
           type="Password"
           placeholder="Password"
-          autoComplete={showRegistration ? "new-password" : "current-password"}
+          autoComplete={showLogin ? "new-password" : "current-password"}
           onChange={(e) => setPassword(e.target.value)}
           className="px-1 py-0.5 text-xs rounded border border-gray-300"
         />
@@ -117,7 +122,7 @@ function RegisterLogin() {
       {showLogin ? (
         <span
           onClick={() => {
-            setShowlogin(false);
+            setShowIsLogin(false);
             setMessage("");
           }}
           className="inline-block text-white text-xs px-1 py-0.5 rounded hover:bg-blue-400 cursor-pointer"
@@ -127,7 +132,7 @@ function RegisterLogin() {
       ) : (
         <span
           onClick={() => {
-            setShowIslogin(true);
+            setShowIsLogin(true);
             setMessage("");
           }}
           className="inline-block text-white text-xs px-1 py-0.5 rounded hover:bg-blue-400 cursor-pointer"

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
+const authenticateJWT = require("./middleware/authenticateJWT");
 
 // taking in the routes
 const checkoutRoutes = require("./routes/checkoutRoutes");
@@ -12,6 +13,11 @@ const customerRoutes = require("./routes/customerRoutes");
 app.use(express.json());
 
 const CLIENT_URL = "http://localhost:5173";
+
+app.use((req, res, next) => {
+  console.log("Incoming request:", req.method, req.path);
+  next();
+});
 
 //Middlewares
 app.use(
@@ -24,8 +30,8 @@ app.use(
 app.use(cookieParser());
 
 // here we are are using are routes
-app.use("/customers", customerRoutes);
-app.use("/checkout", checkoutRoutes);
+app.use("/api/customers", customerRoutes);
+app.use("/api/checkout", authenticateJWT, checkoutRoutes);
 app.use("/", productRoutes);
 
 app.listen(3000, () => console.log("Server is up and running.."));
