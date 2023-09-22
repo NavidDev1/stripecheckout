@@ -5,6 +5,7 @@ import RegisterLogin from "./RegisterLogin";
 
 function Home({ cart, setCart }) {
   const [products, setProducts] = useState([]);
+  const [loggedInUsername, setLoggedInUsername] = useState(null);
 
   useEffect(() => {
     // Getting the products
@@ -12,7 +13,7 @@ function Home({ cart, setCart }) {
       try {
         const response = await axios.get("http://localhost:3000/");
         setProducts(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error("error showing products", error);
       }
@@ -41,6 +42,10 @@ function Home({ cart, setCart }) {
     }
   }
 
+  function setLoggedInUser(email) {
+    setLoggedInUsername(email);
+  }
+
   async function handlePayment() {
     //Creating an array on line_items based on the items in the cart
 
@@ -51,7 +56,7 @@ function Home({ cart, setCart }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart), //sending the line_items in the request body
+        body: JSON.stringify({ cart, email: loggedInUsername }), //sending the line_items in the request body
         credentials: "include",
       }
     );
@@ -63,40 +68,54 @@ function Home({ cart, setCart }) {
     const { url } = await response.json();
     window.location = url;
   }
-  console.log(cart);
+  //console.log(cart);
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white">
       <Navbar onCartClick={handlePayment} cartCount={cart.length} />
-      <RegisterLogin />
-      <div className="grid grid-cols-2 gap-4 ">
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className="box-content h-64 w-64 p-4 border-4 box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);  "
-          >
-            <h3>{product.name}</h3>
-            {product.images.map((image, index) => (
-              <img key={index} src={image} alt={product.name} /> // Corrected mapping function
-            ))}
-            {product.description}
-            <p>Pris: {product.price.unit_amount / 100} kr</p>
-            <button
-              onClick={() => addToCart(product)}
-              className=" bg-blue-500
-              hover:bg-blue-700 text-white font-bold py-2px-4  rounded"
+      <RegisterLogin onLogin={setLoggedInUser} />
+
+      <div className="container mx-auto p-8">
+        <div className="grid grid-cols-2 gap-8">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white p-6 rounded-lg shadow-lg text-black h-full"
             >
-              Add to Cart
-            </button>
-          </div>
-        ))}
+              <h3 className="text-xl font-bold mb-4">{product.name}</h3>
+
+              {product.images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt={product.name}
+                  className="w-full h-48 object-cover mb-4"
+                />
+              ))}
+
+              <p className="text-sm mb-2">{product.description}</p>
+              <p className="mb-4 font-bold">
+                Pris: {product.price.unit_amount / 100} kr
+              </p>
+
+              <button
+                onClick={() => addToCart(product)}
+                className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+        <div className="mt-8 text-center">
+          <button
+            onClick={handlePayment}
+            className="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+          >
+            Proceed to checkout
+          </button>
+        </div>
       </div>
-      <button
-        onClick={handlePayment}
-        className="bg-green-300 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        köp
-      </button>
     </div>
   );
 }

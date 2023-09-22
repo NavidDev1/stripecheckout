@@ -51,6 +51,13 @@ async function login(req, res) {
 
 // Register function
 async function register(req, res) {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res
+      .status(400)
+      .json({ message: "username and password are required" });
+  }
   const existingUser = users.find(
     (user) => user.username === req.body.username
   );
