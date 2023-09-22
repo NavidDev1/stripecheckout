@@ -1,8 +1,24 @@
-# React + Vite
+This is a small POC for a stripe checkout.
+in order to purchase something from the shop the user need to be registred and login. When the user is logged in they can chose items from the shop and proceed to the checkout. the user will be registred as a customer in stripe and stored in a JSON file under the db map.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Packages used in this project are.
 
-Currently, two official plugins are available:
+Stripe
+React.js
+Tailwind CSS
+Express
+Cors
+JWT
+Axios
+Bckrypt
+Cors
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To run this project.
+
+Navigate to ./server in the terminal.
+Install all packages with npm install.
+Run the server with npm run dev.
+
+Navigate to ./client in the terminal.
+Install all packages with npm install.
+Run the project with npm run dev.

@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+
 const authenticateJWT = (req, res, next) => {
   console.log("Authenticating JWT for request:", req.method, req.path);
 
@@ -9,7 +10,9 @@ const authenticateJWT = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log(decoded);
-    req.username = decoded.username; // Passing email to the next middleware
+
+    // here we create a user object and attach the username (email) to it
+    req.user = { username: decoded.username };
 
     next();
   } catch (err) {

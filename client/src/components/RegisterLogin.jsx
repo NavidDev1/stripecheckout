@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function RegisterLogin() {
+function RegisterLogin(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -46,6 +46,9 @@ function RegisterLogin() {
         setIsLoggedIn(true);
         setMessage(response.data.message);
         setShowIsLogin(true);
+        if (props.onLogin) {
+          props.onLogin(username);
+        }
       }
     } catch (error) {
       setIsLoggedIn(false);
@@ -113,7 +116,7 @@ function RegisterLogin() {
   }
 
   return (
-    <div className="flex flex-col items-center space-y-2">
+    <div className="flex flex-col items-center space-y-2 text-black">
       <form className="flex items-center">
         <input
           type="text"

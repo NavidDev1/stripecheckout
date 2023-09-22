@@ -3,7 +3,6 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser");
-const authenticateJWT = require("./middleware/authenticateJWT");
 
 // taking in the routes
 const checkoutRoutes = require("./routes/checkoutRoutes");

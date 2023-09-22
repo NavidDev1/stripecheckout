@@ -37,5 +37,15 @@
     "username": "navid1@gmail.com",
     "password": "$2b$10$U.KjiqA6b52RL4AtwP.RTOfHi.iLOSsAU6twJj8qjVhkxdCBaSjWW",
     "stripeCustomerId": "cus_OgRuvZ6rZjL3xS"
+  },
+  {
+    "username": "",
+    "password": "$2b$10$cJ0w5zs6v9.wWqy9vFAZG.hwB.CkdLrfzojTb4YSlWg3uWOzjvH56",
+    "stripeCustomerId": "cus_OgVym2r1CztWdc"
+  },
+  {
+    "username": "navid2@gmail.com",
+    "password": "$2b$10$4SdQnPU2j56AFsFke8Tcfee4PVYmUZ1KX.T1lwn9z0Swqn8dXN6cu",
+    "stripeCustomerId": "cus_OgW4K3OOOrMDyd"
   }
 ]

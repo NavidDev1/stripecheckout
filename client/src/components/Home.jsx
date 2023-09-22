@@ -5,6 +5,7 @@ import RegisterLogin from "./RegisterLogin";
 
 function Home({ cart, setCart }) {
   const [products, setProducts] = useState([]);
+  const [loggedInUsername, setLoggedInUsername] = useState(null);
 
   useEffect(() => {
     // Getting the products
@@ -12,7 +13,7 @@ function Home({ cart, setCart }) {
       try {
         const response = await axios.get("http://localhost:3000/");
         setProducts(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       } catch (error) {
         console.error("error showing products", error);
       }
@@ -41,6 +42,10 @@ function Home({ cart, setCart }) {
     }
   }
 
+  function setLoggedInUser(email) {
+    setLoggedInUsername(email);
+  }
+
   async function handlePayment() {
     //Creating an array on line_items based on the items in the cart
 
@@ -51,7 +56,7 @@ function Home({ cart, setCart }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cart), //sending the line_items in the request body
+        body: JSON.stringify({ cart, email: loggedInUsername }), //sending the line_items in the request body
         credentials: "include",
       }
     );
@@ -63,12 +68,12 @@ function Home({ cart, setCart }) {
     const { url } = await response.json();
     window.location = url;
   }
-  console.log(cart);
+  //console.log(cart);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white">
       <Navbar onCartClick={handlePayment} cartCount={cart.length} />
-      <RegisterLogin />
+      <RegisterLogin onLogin={setLoggedInUser} />
 
       <div className="container mx-auto p-8">
         <div className="grid grid-cols-2 gap-8">
