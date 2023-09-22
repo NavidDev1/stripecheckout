@@ -59,6 +59,23 @@ function RegisterLogin() {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/customers/logout",
+        {},
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        setIsLoggedIn(false);
+        setMessage(response.data.message);
+      }
+    } catch (error) {
+      console.error("error during logout", error);
+      setMessage("failed to log out");
+    }
+  };
+
   const handleRegister = async () => {
     try {
       const response = await axios.post(
@@ -81,7 +98,18 @@ function RegisterLogin() {
   };
 
   if (isLoggedIn) {
-    return <div>{message}</div>;
+    return (
+      <div className="flex flex-col items-center space-y-2">
+        <span>{message}</span>
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="bg-white text-blue-500 text-xs px-1 py-0.5 rounded hover:bg-gray-200"
+        >
+          Logout
+        </button>
+      </div>
+    );
   }
 
   return (
