@@ -27,5 +27,15 @@
     "username": "admin@admin.se",
     "password": "$2b$10$vYe8zlzz41q7TT05bLZx4.bgT8wCUEUsa41rb2XRn6sw365COn.Uy",
     "stripeCustomerId": "cus_OdLM8NqETJa7Jw"
+  },
+  {
+    "username": "navid@gmail.com",
+    "password": "$2b$10$Cv6yIRRCVLYCBEVjgC7V4epQgbS1Fk5Ugp6FA.s/x6elmjs1PcMym",
+    "stripeCustomerId": "cus_OgQT3GsaFZ3jVl"
+  },
+  {
+    "username": "navid1@gmail.com",
+    "password": "$2b$10$U.KjiqA6b52RL4AtwP.RTOfHi.iLOSsAU6twJj8qjVhkxdCBaSjWW",
+    "stripeCustomerId": "cus_OgRuvZ6rZjL3xS"
   }
 ]

@@ -3,9 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import RegisterLogin from "./RegisterLogin";
 
-function Home() {
+function Home({ cart, setCart }) {
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     // Getting the products
@@ -68,7 +67,7 @@ function Home() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar onCartClick={handlePayment} cartCount={cart.length} />
       <RegisterLogin />
       <div className="grid grid-cols-2 gap-4 ">
         {products.map((product) => (
