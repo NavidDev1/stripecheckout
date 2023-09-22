@@ -1,51 +1,12 @@
 [
   {
-    "username": "user1",
-    "password": "hashed_password1"
+    "username": "user12@gmail.com",
+    "password": "$2b$10$Kqy.ws/tOuBf/v8/T3jfyeryCLyxP1sPyCkPl6ks0DMJAn4rdU.Fi",
+    "stripeCustomerId": "cus_OgWqtp2FBj9BLF"
   },
   {
-    "username": "user2",
-    "password": "hashed_password2"
-  },
-  {
-    "username": "user3",
-    "password": "hashed_password3"
-  },
-  {
-    "username": "ssdsd",
-    "password": "$2b$10$rwCJPn2ETMaSQd3B6wJTmu.DM3TsmpNTDpG7CTNMOKRCujC6gpy0C"
-  },
-  {
-    "username": "kalle",
-    "password": "$2b$10$qpd4UFMgKOFpMsd8rnZF1uQE9GW.keCKQ0FBhGQ2DVPLAf8nHR/oC"
-  },
-  {
-    "username": "user12",
-    "password": "$2b$10$oYbB1O4sxTMGG1ZwXcza3u5cz1telnEnI0G7oT/St5OTKgYV5Trrq"
-  },
-  {
-    "username": "admin@admin.se",
-    "password": "$2b$10$vYe8zlzz41q7TT05bLZx4.bgT8wCUEUsa41rb2XRn6sw365COn.Uy",
-    "stripeCustomerId": "cus_OdLM8NqETJa7Jw"
-  },
-  {
-    "username": "navid@gmail.com",
-    "password": "$2b$10$Cv6yIRRCVLYCBEVjgC7V4epQgbS1Fk5Ugp6FA.s/x6elmjs1PcMym",
-    "stripeCustomerId": "cus_OgQT3GsaFZ3jVl"
-  },
-  {
-    "username": "navid1@gmail.com",
-    "password": "$2b$10$U.KjiqA6b52RL4AtwP.RTOfHi.iLOSsAU6twJj8qjVhkxdCBaSjWW",
-    "stripeCustomerId": "cus_OgRuvZ6rZjL3xS"
-  },
-  {
-    "username": "",
-    "password": "$2b$10$cJ0w5zs6v9.wWqy9vFAZG.hwB.CkdLrfzojTb4YSlWg3uWOzjvH56",
-    "stripeCustomerId": "cus_OgVym2r1CztWdc"
-  },
-  {
-    "username": "navid2@gmail.com",
-    "password": "$2b$10$4SdQnPU2j56AFsFke8Tcfee4PVYmUZ1KX.T1lwn9z0Swqn8dXN6cu",
-    "stripeCustomerId": "cus_OgW4K3OOOrMDyd"
+    "username": "user123@gmail.com",
+    "password": "$2b$10$PEOBfgzmdffuOwDnRmvP.OzjieNB9W1eo884fk01awQapjrC/Y3ka",
+    "stripeCustomerId": "cus_OgWvP2jMCwxyel"
   }
 ]
