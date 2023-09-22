@@ -1,10 +1,5 @@
 [
   {
-    "username": "user12@gmail.com",
-    "password": "$2b$10$Kqy.ws/tOuBf/v8/T3jfyeryCLyxP1sPyCkPl6ks0DMJAn4rdU.Fi",
-    "stripeCustomerId": "cus_OgWqtp2FBj9BLF"
-  },
-  {
     "username": "user123@gmail.com",
     "password": "$2b$10$PEOBfgzmdffuOwDnRmvP.OzjieNB9W1eo884fk01awQapjrC/Y3ka",
     "stripeCustomerId": "cus_OgWvP2jMCwxyel"
